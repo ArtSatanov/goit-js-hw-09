@@ -11,6 +11,8 @@ const refs = {
    start: document.querySelector('button[data-start]'),
 };
 
+
+
 const options = {
   enableTime: true,
   time_24hr: true,
@@ -23,16 +25,23 @@ const options = {
       alert("Please choose a date in the future");
       refs.start.disabled = true;
     } else {
-      refs.start.disabled = false
+      refs.start.disabled = false;     
     };
+
+    let countdownPoint = convertMs(selectedDates[0] - options.defaultDate);
+    console.log(countdownPoint);
+
+    refs.days.textContent = countdownPoint.days;
   },
 };
 
-function onTimerClick() {
-  
-};
 
 flatpickr(refs.picker, options);
+
+function onClick(selctedDate, currentDate) {
+  let countdownPoint = selctedDate - currentDate; 
+  
+}
 
 function convertMs(ms) {
   // Number of milliseconds per unit of time
