@@ -7,7 +7,8 @@ const refs = {
    days: document.querySelector('span[data-days]'),
    hours: document.querySelector('span[data-hours]'),
    minutes: document.querySelector('span[data-minutes]'),
-   seconds: document.querySelector('span[data-seconds]'),
+  seconds: document.querySelector('span[data-seconds]'),
+   start: document.querySelector('button[data-start]'),
 };
 
 const options = {
@@ -17,9 +18,19 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     console.log(selectedDates[0]);
+
+    if (selectedDates[0] < options.defaultDate) {
+      alert("Please choose a date in the future");
+      refs.start.disabled = true;
+    } else {
+      refs.start.disabled = false
+    };
   },
 };
-console.log(refs.picker)
+
+function onTimerClick() {
+  
+};
 
 flatpickr(refs.picker, options);
 
