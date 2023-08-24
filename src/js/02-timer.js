@@ -27,11 +27,7 @@ const options = {
     } else {
       refs.start.disabled = false;     
     };
-
-    let countdownPoint = convertMs(selectedDates[0] - options.defaultDate);
-    console.log(countdownPoint);
-
-    refs.days.textContent = countdownPoint.days;
+    refs.start.addEventListener('click', onClick(selectedDates[0], options.defaultDate));
   },
 };
 
@@ -39,8 +35,24 @@ const options = {
 flatpickr(refs.picker, options);
 
 function onClick(selctedDate, currentDate) {
-  let countdownPoint = selctedDate - currentDate; 
-  
+  let timerId = null;
+  let countdownPoint = selctedDate - currentDate;
+  if (countdownPoint > 0 ) {
+  setInterval(() => {
+    console.log(countdownPoint);
+    convertMs(countdownPoint);
+    refs.days.textContent = countdownPoint.days;
+    refs.hours.textContent = countdownPoint.hours;
+    refs.minutes.textContent = countdownPoint.minutes;
+    refs.seconds.textContent = countdownPoint.seconds;
+  }, 1000);
+  } else {
+    clearInterval(timerId);
+  }
+}
+
+function addLeadingZero (value) {
+  return value.padStart(2, "0");
 }
 
 function convertMs(ms) {
