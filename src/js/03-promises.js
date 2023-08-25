@@ -31,9 +31,10 @@ function createPromise(position, delay) {
       } else {
         rej({position, delay});
       }
-    });
-  }, delay);
-  resultPromise
+    },delay);
+  });
+  
+ return resultPromise
     .then(({ position, delay }) => {
       Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
     })
@@ -41,3 +42,5 @@ function createPromise(position, delay) {
       Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
     });
 }
+
+
