@@ -8,25 +8,36 @@ const refs = {
   submit: document.querySelector('button[type="submit"]'),
 };
 
-refs.submit.addEventListener('click' , onSubmit())
+refs.submit.addEventListener('click', onSubmit);
 
+function onSubmit(e) {
+  e.preventDefault();
+  const firstDelay = Number(refs.firstDelay.value);
+  const amount = Number(refs.amount.value);
+  const step = Number(refs.stepDelay.value);
+
+  for (let i = 1; i <= amount; i += 1) {
+    let delayMath = firstDelay + (step * (i - 1));
+    createPromise(i, delayMath);
+  }
+}
 
 function createPromise(position, delay) {
   const shouldResolve = Math.random() > 0.3;
-  if (shouldResolve) {
-    
-  } else {
-    // Reject
-  }
-};
-
-
-function onSubmit(firstDelay, stepDelay, amount) {
-  const promArray = [];
-  for (let i = 1; i <= amount, i += 1) {
-    
-  //  promArray.push(createPromise(i,))
-  }
-  
+  const resultPromise = new Promise((res, rej) => {
+    setTimeout(() => {
+      if (shouldResolve) {
+        res({position, delay});
+      } else {
+        rej({position, delay});
+      }
+    });
+  }, delay);
+  resultPromise
+    .then(({ position, delay }) => {
+      Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
+    })
+    .catch(({ position, delay }) => {
+      Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
+    });
 }
-
