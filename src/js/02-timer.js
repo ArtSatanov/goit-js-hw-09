@@ -28,20 +28,18 @@ const options = {
         let timerId = null;
         timerId = setInterval(() => {
         const currentDate = new Date();
-    let countdownPoint = selctedDate - currentDate;
-    console.log(convertMs(countdownPoint));
-    convertMs(countdownPoint);
-    if (countdownPoint > 0) {
-      refs.days.textContent = addLeadingZero(convertMs(countdownPoint).days);
-      refs.hours.textContent = addLeadingZero(convertMs(countdownPoint).hours);
-      refs.minutes.textContent = addLeadingZero(convertMs(countdownPoint).minutes);
-      refs.seconds.textContent = addLeadingZero(convertMs(countdownPoint).seconds);
-    } else {
-      clearInterval(timerId);
-          };
+        let countdownPoint = selectedDates[0] - currentDate;
+        if (countdownPoint > 0) {
+          refs.days.textContent = addLeadingZero(convertMs(countdownPoint).days);
+          refs.hours.textContent = addLeadingZero(convertMs(countdownPoint).hours);
+          refs.minutes.textContent = addLeadingZero(convertMs(countdownPoint).minutes);
+          refs.seconds.textContent = addLeadingZero(convertMs(countdownPoint).seconds);
+        } else {
+          clearInterval(timerId);
+        }
   }, 1000);
-      };);
-    },
+      });
+    };
 
     
 
@@ -51,24 +49,6 @@ const options = {
 
 flatpickr(refs.picker, options);
 
-
-function onClick(selctedDate) {
-  let timerId = null;
-  timerId = setInterval(() => {
-    const currentDate = new Date();
-    let countdownPoint = selctedDate - currentDate;
-    console.log(convertMs(countdownPoint));
-    convertMs(countdownPoint);
-    if (countdownPoint > 0) {
-      refs.days.textContent = addLeadingZero(convertMs(countdownPoint).days);
-      refs.hours.textContent = addLeadingZero(convertMs(countdownPoint).hours);
-      refs.minutes.textContent = addLeadingZero(convertMs(countdownPoint).minutes);
-      refs.seconds.textContent = addLeadingZero(convertMs(countdownPoint).seconds);
-    } else {
-      clearInterval(timerId);
-    }
-  }, 1000);
-};
 
 function addLeadingZero (value) {
   return value.toString().padStart(2, "0");
