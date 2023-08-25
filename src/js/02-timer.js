@@ -24,9 +24,26 @@ const options = {
       refs.start.disabled = true;
     } else {
       refs.start.disabled = false;
-    };
+      refs.start.addEventListener('click', () => {
+        let timerId = null;
+        timerId = setInterval(() => {
+        const currentDate = new Date();
+    let countdownPoint = selctedDate - currentDate;
+    console.log(convertMs(countdownPoint));
+    convertMs(countdownPoint);
+    if (countdownPoint > 0) {
+      refs.days.textContent = addLeadingZero(convertMs(countdownPoint).days);
+      refs.hours.textContent = addLeadingZero(convertMs(countdownPoint).hours);
+      refs.minutes.textContent = addLeadingZero(convertMs(countdownPoint).minutes);
+      refs.seconds.textContent = addLeadingZero(convertMs(countdownPoint).seconds);
+    } else {
+      clearInterval(timerId);
+          };
+  }, 1000);
+      };);
+    },
 
-    refs.start.addEventListener('click', onClick(selectedDates[0]));
+    
 
   },
 };
@@ -34,9 +51,10 @@ const options = {
 
 flatpickr(refs.picker, options);
 
+
 function onClick(selctedDate) {
   let timerId = null;
-  setInterval(() => {
+  timerId = setInterval(() => {
     const currentDate = new Date();
     let countdownPoint = selctedDate - currentDate;
     console.log(convertMs(countdownPoint));
