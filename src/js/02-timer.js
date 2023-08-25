@@ -1,7 +1,6 @@
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 
-
 const refs = {
    picker: document.querySelector('#datetime-picker'),
    days: document.querySelector('span[data-days]'),
@@ -11,8 +10,6 @@ const refs = {
    start: document.querySelector('button[data-start]'),
 };
 
-
-
 const options = {
   enableTime: true,
   time_24hr: true,
@@ -20,39 +17,42 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     console.log(selectedDates[0]);
+    
 
     if (selectedDates[0] < options.defaultDate) {
       alert("Please choose a date in the future");
       refs.start.disabled = true;
     } else {
-      refs.start.disabled = false;     
+      refs.start.disabled = false;
     };
-    refs.start.addEventListener('click', onClick(selectedDates[0], options.defaultDate));
   },
 };
 
 
 flatpickr(refs.picker, options);
+refs.start.addEventListener('click', onClick(selectedDates[0]));
 
-function onClick(selctedDate, currentDate) {
+function onClick(selctedDate) {
   let timerId = null;
-  let countdownPoint = selctedDate - currentDate;
-  if (countdownPoint > 0 ) {
+  
   setInterval(() => {
-    console.log(countdownPoint);
+    const currentDate = new Date();
+    let countdownPoint = selctedDate - currentDate;
+    console.log(convertMs(countdownPoint));
     convertMs(countdownPoint);
-    refs.days.textContent = countdownPoint.days;
-    refs.hours.textContent = countdownPoint.hours;
-    refs.minutes.textContent = countdownPoint.minutes;
-    refs.seconds.textContent = countdownPoint.seconds;
+    if (countdownPoint > 0) {
+      refs.days.textContent = addLeadingZero(convertMs(countdownPoint).days);
+      refs.hours.textContent = addLeadingZero(convertMs(countdownPoint).hours);
+      refs.minutes.textContent = addLeadingZero(convertMs(countdownPoint).minutes);
+      refs.seconds.textContent = addLeadingZero(convertMs(countdownPoint).seconds);
+    } else {
+      clearInterval(timerId);
+    }
   }, 1000);
-  } else {
-    clearInterval(timerId);
-  }
-}
+};
 
 function addLeadingZero (value) {
-  return value.padStart(2, "0");
+  return value.toString().padStart(2, "0");
 }
 
 function convertMs(ms) {
