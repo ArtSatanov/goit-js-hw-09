@@ -25,16 +25,17 @@ const options = {
     } else {
       refs.start.disabled = false;
     };
+
+    refs.start.addEventListener('click', onClick(selectedDates[0]));
+
   },
 };
 
 
 flatpickr(refs.picker, options);
-refs.start.addEventListener('click', onClick(selectedDates[0]));
 
 function onClick(selctedDate) {
   let timerId = null;
-  
   setInterval(() => {
     const currentDate = new Date();
     let countdownPoint = selctedDate - currentDate;
